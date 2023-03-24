@@ -12,7 +12,10 @@ export class GifsService {
 
   public results: Gif[] = [];
 
-  constructor (private http: HttpClient) { }
+  constructor (private http: HttpClient) {
+
+    this._history = JSON.parse(localStorage.getItem('history') || '[]');
+  }
 
   getHistory () {
     return [ ...this._history ];
@@ -25,6 +28,8 @@ export class GifsService {
     if (!this._history.includes(query)) {
       this._history.unshift(query);
       this._history = this._history.splice(0, 10);
+
+      localStorage.setItem('history', JSON.stringify(this._history));
     }
 
     // https://api.giphy.com/v1/gifs/search?api_key=pkvDYJ4yws0SDc8yuSEFQ4YTm5LjprOw&q=dragon ball z&limit=10
