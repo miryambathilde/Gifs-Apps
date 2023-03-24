@@ -39,11 +39,8 @@ export class GifsService {
       .set('limit', '10')
       .set('q', query);
 
-    console.log(queryParams.toString());
-
     this.http.get<SearchGifsResponse>(`${this.apiUrl}search`, { params: queryParams })
       .subscribe((resp) => {
-        console.log(resp.data);
         this.results = resp.data;
         localStorage.setItem('results', JSON.stringify(this.results));
       });
